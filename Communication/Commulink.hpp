@@ -92,6 +92,11 @@ struct CommulinkConfig
 	const Port* get_CommuPort( uint8_t port );
 	
 	//设定mavlink模式
+
+	/*2021_10_21 gby*/
+	bool set_mav_mode_guided();
+	/*2021_10_21 gby*/
+	
 	bool set_mav_mode_arm();
 	bool set_mav_mode_disarm();
 	bool set_mav_mode( uint16_t req_mav_mode, uint16_t req_mav_main_mode, uint16_t req_mav_sub_mode );

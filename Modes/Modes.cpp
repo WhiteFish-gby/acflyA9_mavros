@@ -346,7 +346,7 @@ static void Modes_Server(void* pvParameters)
 				{
 					if( modes[pre_enter_mode] != 0 )
 					{
-						current_mode = pre_enter_mode;
+						
 						changeMode( pre_enter_mode, &MF_mode, 0, 0,
 												&msg_available, &msg_handled, &msg );
 						reset_States;

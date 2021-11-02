@@ -499,6 +499,21 @@ void inject_RtkPorts(const uint8_t data[], uint16_t length)
 static uint16_t mav_mode = MAV_MODE_FLAG_CUSTOM_MODE_ENABLED;
 static uint16_t mav_main_mode = PX4_CUSTOM_MAIN_MODE_STABILIZED;
 static uint16_t mav_sub_mode = 0;
+
+/*2021_10_21 gby*/
+bool set_mav_mode_guided()
+{
+	//屏蔽用户控制
+	bool isMSafe = (xTaskGetCurrentTaskHandle() == MSafeTaskHandle);
+	if (!isMSafe && ForceMSafeCtrl)
+		return false;
+	//mav_mode |= MAV_MODE_FLAG_STABILIZE_ENABLED;
+	//mav_mode |= MAV_MODE_FLAG_MANUAL_INPUT_ENABLED;
+	mav_mode |= MAV_MODE_FLAG_GUIDED_ENABLED;
+	return true;
+}
+/*2021_10_21 gby*/
+
 bool set_mav_mode_arm()
 {
 	//屏蔽用户控制
@@ -614,31 +629,23 @@ static void Commulink_Server(void *pvParameters)
 				{ //发送心跳包
 					if (mavlink_lock_chan(i, 0.01))
 					{
-						// extern bool GCS_is_MP;
-						// px4_custom_mode custom_mode;
-						// custom_mode.reserved = 0;
-						// custom_mode.main_mode = mav_main_mode;
-						// if ((mav_mode & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED) && GCS_is_MP && mav_main_mode == PX4_CUSTOM_MAIN_MODE_AUTO)
-						// 	custom_mode.main_mode = 0;
-						// custom_mode.sub_mode = mav_sub_mode;
-						uint8_t base_mode = 0, custom_mode = 0, sys_stutus = 0;
-						base_mode |= MAV_MODE_FLAG_STABILIZE_ENABLED;
-						base_mode |= MAV_MODE_FLAG_GUIDED_ENABLED;
-						base_mode |= MAV_MODE_FLAG_MANUAL_INPUT_ENABLED;
-						base_mode |= MAV_MODE_FLAG_CUSTOM_MODE_ENABLED;
-						if (get_current_mode() >= 30)
-							base_mode |= MAV_MODE_FLAG_SAFETY_ARMED;
-						custom_mode = get_current_mode();
-						mavlink_msg_heartbeat_pack_chan(
-							get_CommulinkSysId(),  //system id
-							get_CommulinkCompId(), //component id
-							i,					   //chan
+						extern bool GCS_is_MP;
+						px4_custom_mode custom_mode;
+						custom_mode.reserved = 0;
+						custom_mode.main_mode = mav_main_mode;
+						if( (mav_mode&MAV_MODE_FLAG_CUSTOM_MODE_ENABLED) && GCS_is_MP && mav_main_mode==PX4_CUSTOM_MAIN_MODE_AUTO )
+							custom_mode.main_mode = 0;
+						custom_mode.sub_mode = mav_sub_mode;						
+						mavlink_msg_heartbeat_pack_chan( 
+							get_CommulinkSysId() ,	//system id
+							get_CommulinkCompId() ,	//component id
+							i	,	//chan
 							&msg_sd,
-							MAV_TYPE_QUADROTOR,												 //type
-							MAV_AUTOPILOT_GENERIC,											 //autopilot
-							base_mode, //base mode
-							custom_mode,																 //custom mode
-							MAV_STATE_STANDBY												 //sys status
+							MAV_TYPE_QUADROTOR ,	//type
+							MAV_AUTOPILOT_PX4 ,	//autopilot
+							mav_mode > 0 ? MAV_MODE_FLAG_CUSTOM_MODE_ENABLED | mav_mode : 0 ,	//base mode
+							custom_mode.data ,	//custom mode
+							MAV_STATE_STANDBY	//sys status											 //sys status
 						);
 						mavlink_msg_to_send_buffer(Ports[CommuPorts[i]].write,
 												   Ports[CommuPorts[i]].lock,
