@@ -222,5 +222,5 @@
   Drivers\Receiver.hpp Basic\Missions.hpp \
   ControlSystem\ControlSystem.hpp Drivers\Sensors.hpp \
   Math\quaternion.hpp Modes\AuxFuncs.hpp Drivers\drv_Uart1.hpp \
-  Drivers\SensorsBackend.hpp Drivers\Sensors.hpp Modes\M35_Auto1.hpp \
-  Modes\Modes.hpp
+  Drivers\drv_Uart3.hpp Drivers\SensorsBackend.hpp Drivers\Sensors.hpp \
+  Modes\M35_Auto1.hpp Modes\Modes.hpp

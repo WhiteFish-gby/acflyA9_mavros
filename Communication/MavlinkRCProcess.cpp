@@ -14,6 +14,7 @@
 #include "AuxFuncs.hpp"
 
 #include "drv_Uart1.hpp"
+#include "drv_Uart3.hpp"
 #include "Sensors.hpp"
 #include "SensorsBackend.hpp"
 #include "M35_Auto1.hpp"
@@ -961,7 +962,7 @@ static void Msg102_VISION_POSITION_ESTIMATE( uint8_t Port_index , const mavlink_
 
 		// /* ÆÁÄ»´òÓ¡
 		sprintf(mystr,"Z =%5.3lf\r\n\r\n",position.z);
-		Write_Uart1((uint8_t *)mystr, strlen(mystr), 1, 1);
+		Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 		// */
     }
     
@@ -992,9 +993,9 @@ static void Msg103_VISION_SPEED_ESTIMATE ( uint8_t Port_index, const mavlink_mes
 
 		// /* ÆÁÄ»´òÓ¡
 		sprintf(mystr,"Vx=%5.3lf\r\n\r\n",vel.x);
-		Write_Uart1((uint8_t *)mystr, strlen(mystr), 1, 1);
+		Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 		sprintf(mystr,"Vy=%5.3lf\r\n\r\n",vel.y);
-		Write_Uart1((uint8_t *)mystr, strlen(mystr), 1, 1);
+		Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 		// */
     }
 }
