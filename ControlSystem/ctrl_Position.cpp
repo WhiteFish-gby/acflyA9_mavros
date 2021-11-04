@@ -153,12 +153,18 @@ bool is_Altitude_Control_Enabled(bool *ena, double TIMEOUT)
 bool Altitude_Control_Enable(double TIMEOUT)
 {
 	if (get_Altitude_MSStatus() != MS_Ready)
+	{
+		sprintf(mystr_3,"AF:Altitude_MSStatus Not Ready\r\n\r\n");
+		Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 		return false;
+	}
 
 	if (LockCtrl(TIMEOUT))
 	{
 		if (Altitude_Control_Enabled == true)
 		{ //控制器已打开
+			sprintf(mystr_3,"AF:Altitude_Control Already Enabled\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 			UnlockCtrl();
 			return false;
 		}
@@ -166,12 +172,22 @@ bool Altitude_Control_Enable(double TIMEOUT)
 		if (!isMSafe && ForceMSafeCtrl)
 		{ //屏蔽用户控制
 			last_ZCtrlTime = TIME::now();
+			sprintf(mystr_3,"AF:Force MSafe Ctrl\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 			UnlockCtrl();
 			return false;
 		}
-		Attitude_Control_Enable();
+
+		bool tmp_suc;
+		tmp_suc = Attitude_Control_Enable();
 		Altitude_ControlMode = Position_ControlMode_Locking;
 		Altitude_Control_Enabled = true;
+
+		if(!tmp_suc)
+		{
+			sprintf(mystr_3,"AF:Attitude_Control_Enabled Failed\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
+		}
 
 		//更新控制时间
 		if (!isMSafe)
@@ -180,6 +196,8 @@ bool Altitude_Control_Enable(double TIMEOUT)
 		//读参数
 		if (ReadParamGroup("PosCtrl", (uint64_t *)&cfg, 0, TIMEOUT) != PR_OK)
 		{
+			sprintf(mystr_3,"AF:Param Not OK\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 			UnlockCtrl();
 			return false;
 		}
@@ -191,9 +209,14 @@ bool Altitude_Control_Enable(double TIMEOUT)
 
 		Position_Control_reset_ZAutoSpeed();
 
+
+		sprintf(mystr_3,"AS:Sucess\r\n\r\n");
+		Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 		UnlockCtrl();
 		return true;
 	}
+	sprintf(mystr_3,"PF:TIMEOUT\r\n\r\n");
+	Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 	return false;
 }
 bool Altitude_Control_Disable(double TIMEOUT)
@@ -555,12 +578,19 @@ bool is_Position_Control_Enabled(bool *ena, double TIMEOUT)
 bool Position_Control_Enable(double TIMEOUT)
 {
 	if (get_Position_MSStatus() != MS_Ready)
+	{
+		sprintf(mystr_3,"PF:Position_MSStatus Not Ready\r\n\r\n");
+		Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 		return false;
+	}
+		
 
 	if (LockCtrl(TIMEOUT))
 	{
 		if (Position_Control_Enabled == true)
 		{ //控制器已打开
+			sprintf(mystr_3,"PF:Position_Control Already Enabled\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 			UnlockCtrl();
 			return false;
 		}
@@ -568,12 +598,16 @@ bool Position_Control_Enable(double TIMEOUT)
 		if (!isMSafe && ForceMSafeCtrl)
 		{ //屏蔽用户控制
 			last_XYCtrlTime = TIME::now();
+			sprintf(mystr_3,"PF:Force MSafe Ctrl\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 			UnlockCtrl();
 			return false;
 		}
 		Altitude_Control_Enable();
 		if (Altitude_Control_Enabled == false)
 		{
+			sprintf(mystr_3,"PF:Altitude_Control_Enabled Failed\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 			UnlockCtrl();
 			return false;
 		}
@@ -593,9 +627,13 @@ bool Position_Control_Enable(double TIMEOUT)
 		Position_Control_reset_XYAutoSpeed();
 		Position_Control_reset_XYZAutoSpeed();
 
+		sprintf(mystr_3,"PS:Sucess\r\n\r\n");
+		Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 		UnlockCtrl();
 		return true;
 	}
+	sprintf(mystr_3,"PF:TIMEOUT\r\n\r\n");
+	Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 	return false;
 }
 bool Position_Control_Disable(double TIMEOUT)
