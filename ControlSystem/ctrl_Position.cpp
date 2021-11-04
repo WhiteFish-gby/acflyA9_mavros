@@ -19,6 +19,9 @@
 #include "drv_Uart3.hpp"
 //
 char mystr_3[32];
+
+char mystr_5[32];
+
 //
 
 /*参数*/
@@ -484,7 +487,7 @@ bool Position_Control_Takeoff_HeightRelative(double height, double TIMEOUT)
 	get_is_inFlight(&inFlight);
 	if (inFlight == true)
 	{
-		sprintf(mystr_3,"is inflight\r\n\r\n");
+		sprintf(mystr_3, "is inflight\r\n\r\n");
 		Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 		return false;
 	}
@@ -494,8 +497,8 @@ bool Position_Control_Takeoff_HeightRelative(double height, double TIMEOUT)
 		if (Altitude_Control_Enabled == false)
 		{ //控制器未打开
 			UnlockCtrl();
-			sprintf(mystr_3,"altitude_control_disabled\r\n\r\n");
-		    Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
+			sprintf(mystr_3, "altitude_control_disabled\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 			return false;
 		}
 		bool isMSafe = (xTaskGetCurrentTaskHandle() == MSafeTaskHandle);
@@ -503,8 +506,8 @@ bool Position_Control_Takeoff_HeightRelative(double height, double TIMEOUT)
 		{ //屏蔽用户控制
 			last_ZCtrlTime = TIME::now();
 			UnlockCtrl();
-			sprintf(mystr_3,"user_disabled\r\n\r\n");
-		    Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
+			sprintf(mystr_3, "user_disabled\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 			return false;
 		}
 
@@ -518,8 +521,8 @@ bool Position_Control_Takeoff_HeightRelative(double height, double TIMEOUT)
 		UnlockCtrl();
 		return true;
 	}
-	sprintf(mystr_3,"lockctrl_false\r\n\r\n");
-    Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
+	sprintf(mystr_3, "lockctrl_false\r\n\r\n");
+	Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 	return false;
 }
 bool Position_Control_Takeoff_HeightGlobal(double height, double TIMEOUT)
@@ -575,7 +578,14 @@ bool Position_Control_Enable(double TIMEOUT)
 		if (Altitude_Control_Enabled == false)
 		{
 			UnlockCtrl();
+			sprintf(mystr_5, "Altitude_Control_disabled_in_position_control\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_5, strlen(mystr_5), 1, 1);
 			return false;
+		}
+		else
+		{
+			sprintf(mystr_5, "Altitude_Control_enabled_in_position_control\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_5, strlen(mystr_5), 1, 1);
 		}
 		HorizontalPosition_ControlMode = Position_ControlMode_Locking;
 		Position_Control_Enabled = true;
