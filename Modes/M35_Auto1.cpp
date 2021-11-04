@@ -11,6 +11,11 @@
 #include "NavCmdProcess.hpp"
 
 #include "drv_LED.hpp"
+
+#include "drv_Uart3.hpp"
+//
+char mystr_4[32];
+//
 bool guided_enabled = false;
 bool pos_enabled = true;
 M35_Auto1::M35_Auto1() : Mode_Base("Auto1", 35)
@@ -19,9 +24,17 @@ M35_Auto1::M35_Auto1() : Mode_Base("Auto1", 35)
 
 ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 {
+	bool flag_mine = 1;
+
+
 	double freq = 50;
 	setLedMode(LEDMode_Flying1);
-	Altitude_Control_Enable();
+	if (!Altitude_Control_Enable())
+	{
+		sprintf(mystr_4, "altitude_control_enabled_in_M35\r\n\r\n");
+		Write_Uart3((uint8_t *)mystr_4, strlen(mystr_4), 1, 1);
+		flag_mine = 0;
+	}
 	Position_Control_Enable();
 	uint16_t exit_mode_counter_rs = 0;
 	uint16_t exit_mode_counter = 0;
@@ -176,40 +189,40 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 				//reqMode = AFunc_Mission;
 				//set_BuzzerOnOff(1);
 				/*判断执行任务*/
-				if( MFunc_cfg.MissionBt[0]>=2 && MFunc_cfg.MissionBt[0]<=4 )
-					{	//按钮按下执行任务
-						if( rc.available_channels >= MFunc_cfg.MissionBt[0]+4 )
-						{			
-							//获取按钮状态
-							double btn_value = rc.data[MFunc_cfg.MissionBt[0]-1+4];
-							uint8_t new_MissionButtonZone = get_RcButtonZone( btn_value, MissionButtonZone );									
-							if( new_MissionButtonZone!=MissionButtonZone )
-							{	//按钮状态发生变化
-								if( new_MissionButtonZone>=4 )
-									reqMode = AFunc_Mission;
-								else
-									reqMode = 0;
-							}
-							MissionButtonZone = new_MissionButtonZone;
+				if (MFunc_cfg.MissionBt[0] >= 2 && MFunc_cfg.MissionBt[0] <= 4)
+				{ //按钮按下执行任务
+					if (rc.available_channels >= MFunc_cfg.MissionBt[0] + 4)
+					{
+						//获取按钮状态
+						double btn_value = rc.data[MFunc_cfg.MissionBt[0] - 1 + 4];
+						uint8_t new_MissionButtonZone = get_RcButtonZone(btn_value, MissionButtonZone);
+						if (new_MissionButtonZone != MissionButtonZone)
+						{ //按钮状态发生变化
+							if (new_MissionButtonZone >= 4)
+								reqMode = AFunc_Mission;
+							else
+								reqMode = 0;
 						}
+						MissionButtonZone = new_MissionButtonZone;
 					}
-					else if( MFunc_cfg.MissionBt[0]>=12 && MFunc_cfg.MissionBt[0]<=14 )
-					{	//按钮变化执行任务
-						if( rc.available_channels >= MFunc_cfg.MissionBt[0]-10+4 )
-						{
-							//获取按钮状态
-							double btn_value = rc.data[MFunc_cfg.MissionBt[0]-11+4];
-							uint8_t new_MissionButtonZone = get_RcButtonZone( btn_value, MissionButtonZone );
-							if( MissionButtonZone<=5 && new_MissionButtonZone!=MissionButtonZone )
-							{	//按钮状态发生变化
-								if( cMode != AFunc_Mission )
-									reqMode = AFunc_Mission;
-								else
-									reqMode = 0;
-							}
-							MissionButtonZone = new_MissionButtonZone;
+				}
+				else if (MFunc_cfg.MissionBt[0] >= 12 && MFunc_cfg.MissionBt[0] <= 14)
+				{ //按钮变化执行任务
+					if (rc.available_channels >= MFunc_cfg.MissionBt[0] - 10 + 4)
+					{
+						//获取按钮状态
+						double btn_value = rc.data[MFunc_cfg.MissionBt[0] - 11 + 4];
+						uint8_t new_MissionButtonZone = get_RcButtonZone(btn_value, MissionButtonZone);
+						if (MissionButtonZone <= 5 && new_MissionButtonZone != MissionButtonZone)
+						{ //按钮状态发生变化
+							if (cMode != AFunc_Mission)
+								reqMode = AFunc_Mission;
+							else
+								reqMode = 0;
 						}
+						MissionButtonZone = new_MissionButtonZone;
 					}
+				}
 				/*判断执行任务*/
 
 				/*判断返航*/

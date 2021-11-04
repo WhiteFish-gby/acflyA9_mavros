@@ -224,4 +224,4 @@
   Math\smooth_kp.hpp ControlSystem\ESO_AngularRate.hpp \
   Filters\Filters_LP.hpp Filters\Filters_BS.hpp ControlSystem\ESO_h.hpp \
   Drivers\drv_PWMOut.hpp Filters\TD3_3D.hpp Communication\Commulink.hpp \
-  Basic\StorageSystem.hpp
+  Basic\StorageSystem.hpp Drivers\drv_Uart3.hpp

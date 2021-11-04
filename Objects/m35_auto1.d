@@ -220,4 +220,4 @@
   Math\Quaternion.hpp Math\AC_Math.hpp Basic\Parameters.hpp \
   Basic\Basic.hpp Communication\Commulink.hpp \
   ControlSystem\ControlSystem.hpp Modes\NavCmdProcess.hpp \
-  Drivers\drv_LED.hpp
+  Drivers\drv_LED.hpp Drivers\drv_Uart3.hpp

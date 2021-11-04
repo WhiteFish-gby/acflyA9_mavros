@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\ACFly.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ACFly.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Thu Nov  4 08:59:24 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Thu Nov  4 14:57:48 2021
 <BR><P>
 <H3>Maximum Stack Usage =       3696 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1042,9 +1042,8 @@ Global Symbols
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL10GUI_ServerPv
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL16Commulink_ServerPv
 <LI><a href="#[2de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AuxCamTakePhoto()
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL24Msg32_LOCAL_POSITION_NEDhP17__mavlink_message
-<LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL31Msg102_VISION_POSITION_ESTIMATEhPK17__mavlink_message
-<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL28Msg103_VISION_SPEED_ESTIMATEhPK17__mavlink_message
 <LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL24Msg21_PARAM_REQUEST_LISThPK17__mavlink_message
 </UL>
 
@@ -1170,9 +1169,10 @@ Global Symbols
 <LI><a href="#[2ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_drv_BootLoader()
 <LI><a href="#[3af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tud_task
 <LI><a href="#[42b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lfs_file_rawopencfg
+<LI><a href="#[373]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Control_Takeoff_HeightRelative(double, double)
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL24Msg32_LOCAL_POSITION_NEDhP17__mavlink_message
-<LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL31Msg102_VISION_POSITION_ESTIMATEhPK17__mavlink_message
-<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL28Msg103_VISION_SPEED_ESTIMATEhPK17__mavlink_message
+<LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;M35_Auto1::main_func(void*, unsigned)
 </UL>
 
 <P><STRONG><a name="[321]"></a>strcat</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, strcat.o(.text))
@@ -3088,8 +3088,9 @@ Global Symbols
 <LI><a href="#[22d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueGiveMutexRecursive
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xEventGroupClearBits
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL31Msg102_VISION_POSITION_ESTIMATEhPK17__mavlink_message
-<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL28Msg103_VISION_SPEED_ESTIMATEhPK17__mavlink_message
+<BR>[Called By]<UL><LI><a href="#[373]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Control_Takeoff_HeightRelative(double, double)
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message
+<LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;M35_Auto1::main_func(void*, unsigned)
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> drv_uart3.o(.text._Z14init_drv_Uart3v)
 </UL>
@@ -6161,7 +6162,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[372]"></a>Position_Control_Takeoff_Height(double, double)</STRONG> (Thumb, 64 bytes, Stack size 48 bytes, ctrl_position.o(.text._Z31Position_Control_Takeoff_Heightdd))
-<BR><BR>[Stack]<UL><LI>Max Depth = 216<LI>Call Chain = Position_Control_Takeoff_Height(double, double) &rArr; Position_Control_Takeoff_HeightRelative(double, double) &rArr; LockCtrl(double) &rArr; xQueueTakeMutexRecursive &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
+<BR><BR>[Stack]<UL><LI>Max Depth = 256<LI>Call Chain = Position_Control_Takeoff_Height(double, double) &rArr; Position_Control_Takeoff_HeightRelative(double, double) &rArr; Write_Uart3(const unsigned char*, unsigned short, double, double) &rArr; xQueueTakeMutexRecursive &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[29d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_Position_Ctrl(vector3&lang;double&rang;*, double)
 <LI><a href="#[373]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Control_Takeoff_HeightRelative(double, double)
@@ -6354,7 +6355,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[380]"></a>Position_Control_Takeoff_HeightGlobal(double, double)</STRONG> (Thumb, 82 bytes, Stack size 112 bytes, ctrl_position.o(.text._Z37Position_Control_Takeoff_HeightGlobaldd))
-<BR><BR>[Stack]<UL><LI>Max Depth = 280<LI>Call Chain = Position_Control_Takeoff_HeightGlobal(double, double) &rArr; Position_Control_Takeoff_HeightRelative(double, double) &rArr; LockCtrl(double) &rArr; xQueueTakeMutexRecursive &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
+<BR><BR>[Stack]<UL><LI>Max Depth = 320<LI>Call Chain = Position_Control_Takeoff_HeightGlobal(double, double) &rArr; Position_Control_Takeoff_HeightRelative(double, double) &rArr; Write_Uart3(const unsigned char*, unsigned short, double, double) &rArr; xQueueTakeMutexRecursive &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[373]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Control_Takeoff_HeightRelative(double, double)
 <LI><a href="#[31a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_OptimalGlobal_Z(PosSensorHealthInf1*, double)
@@ -6418,13 +6419,15 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL35Msg84_SET_POSITION_TARGET_LOCAL_NEDhPK17__mavlink_message
 </UL>
 
-<P><STRONG><a name="[373]"></a>Position_Control_Takeoff_HeightRelative(double, double)</STRONG> (Thumb, 344 bytes, Stack size 32 bytes, ctrl_position.o(.text._Z39Position_Control_Takeoff_HeightRelativedd))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = Position_Control_Takeoff_HeightRelative(double, double) &rArr; LockCtrl(double) &rArr; xQueueTakeMutexRecursive &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
+<P><STRONG><a name="[373]"></a>Position_Control_Takeoff_HeightRelative(double, double)</STRONG> (Thumb, 632 bytes, Stack size 40 bytes, ctrl_position.o(.text._Z39Position_Control_Takeoff_HeightRelativedd))
+<BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = Position_Control_Takeoff_HeightRelative(double, double) &rArr; Write_Uart3(const unsigned char*, unsigned short, double, double) &rArr; xQueueTakeMutexRecursive &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_is_inFlight(bool*, double)
 <LI><a href="#[285]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetCurrentTaskHandle
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Uart3(const unsigned char*, unsigned short, double, double)
 <LI><a href="#[272]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LockCtrl(double)
 <LI><a href="#[23c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnlockCtrl()
+<LI><a href="#[322]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message
 <LI><a href="#[380]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Control_Takeoff_HeightGlobal(double, double)
@@ -6835,7 +6838,6 @@ Global Symbols
 <LI><a href="#[3d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_maxYawSpeed()
 <LI><a href="#[3d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_maxLean()
 <LI><a href="#[26a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enter_MSafe(bool, double)
-<LI><a href="#[3cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL33mavlink_msg_command_ack_pack_chanhhhP17__mavlink_messagethhihh
 <LI><a href="#[3ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL26mavlink_msg_to_send_bufferPFtPKhtddEPFbdEPFvvEPK17__mavlink_messagedd
 <LI><a href="#[388]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Control_set_TargetPositionZGlobal(double, double, double)
 <LI><a href="#[386]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Control_get_LineFlightDistance(double*, double)
@@ -6861,6 +6863,7 @@ Global Symbols
 <LI><a href="#[3d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_maxVelUp()
 <LI><a href="#[3db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_maxAccXY()
 <LI><a href="#[3de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_NavCmd(unsigned short, double, unsigned char, double*)
+<LI><a href="#[3cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL33mavlink_msg_command_ack_pack_chanhhhP17__mavlink_messagethhihh
 <LI><a href="#[229]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SName::SName__sub_object(const char*)
 <LI><a href="#[257]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrt
 <LI><a href="#[2eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
@@ -7110,13 +7113,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[28f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ctrl_Attitude()
 </UL>
 
-<P><STRONG><a name="[146]"></a>M35_Auto1::main_func(void*, unsigned)</STRONG> (Thumb, 4464 bytes, Stack size 1000 bytes, m35_auto1.o(.text._ZN9M35_Auto19main_funcEPvj))
+<P><STRONG><a name="[146]"></a>M35_Auto1::main_func(void*, unsigned)</STRONG> (Thumb, 4552 bytes, Stack size 1000 bytes, m35_auto1.o(.text._ZN9M35_Auto19main_funcEPvj))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1688<LI>Call Chain = M35_Auto1::main_func(void*, unsigned) &rArr; Position_Control_Enable(double) &rArr; Altitude_Control_Enable(double) &rArr; Attitude_Control_Enable(double) &rArr; get_Airframe_quat(Quaternion*, double) &rArr; ReadParamGroup(SName, unsigned long long*, bool*, double) &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[206]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 <LI><a href="#[2b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadParamGroup(SName, unsigned long long*, bool*, double)
 <LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_is_inFlight(bool*, double)
 <LI><a href="#[26b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getReceiver(Receiver*, SName*, double)
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Uart3(const unsigned char*, unsigned short, double, double)
 <LI><a href="#[2e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mavlink_unlock_chan
 <LI><a href="#[2e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mavlink_lock_chan
 <LI><a href="#[2e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_CommulinkCompId()
@@ -7153,6 +7157,7 @@ Global Symbols
 <LI><a href="#[258]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_atan2
 <LI><a href="#[3b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 <LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[322]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> m35_auto1.o(.rodata._ZTV9M35_Auto1)
 </UL>
@@ -11993,16 +11998,20 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mavlinkcmdprocess.o(.rodata.Mavlink_CMD_Process)
 </UL>
-<P><STRONG><a name="[104]"></a>_ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message</STRONG> (Thumb, 252 bytes, Stack size 328 bytes, mavlinkcmdprocess.o(.text._ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message))
-<BR><BR>[Stack]<UL><LI>Max Depth = 976<LI>Call Chain = _ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message &rArr; _ZL29mavlink_finalize_message_chanP17__mavlink_messagehhhhhh &rArr; _ZL21mavlink_sha256_updateP18mavlink_sha256_ctxPKvj
+<P><STRONG><a name="[104]"></a>_ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message</STRONG> (Thumb, 392 bytes, Stack size 336 bytes, mavlinkcmdprocess.o(.text._ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message))
+<BR><BR>[Stack]<UL><LI>Max Depth = 984 + Unknown Stack Size
+<LI>Call Chain = _ZL25Cmd22_MAV_CMD_NAV_TAKEOFFhPK17__mavlink_message &rArr; _ZL29mavlink_finalize_message_chanP17__mavlink_messagehhhhhh &rArr; _ZL21mavlink_sha256_updateP18mavlink_sha256_ctxPKvj
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mavlink_unlock_chan
+<BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Uart3(const unsigned char*, unsigned short, double, double)
+<LI><a href="#[2e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mavlink_unlock_chan
 <LI><a href="#[2e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mavlink_lock_chan
 <LI><a href="#[2e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_CommuPort(unsigned char)
 <LI><a href="#[373]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Control_Takeoff_HeightRelative(double, double)
 <LI><a href="#[3cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Guided_Mode_Enabled()
 <LI><a href="#[3c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL29mavlink_finalize_message_chanP17__mavlink_messagehhhhhh
 <LI><a href="#[3ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL26mavlink_msg_to_send_bufferPFtPKhtddEPFbdEPFvvEPK17__mavlink_messagedd
+<LI><a href="#[322]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mavlinkcmdprocess.o(.rodata.Mavlink_CMD_Process)
 </UL>
@@ -12653,17 +12662,13 @@ Local Symbols
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL15Msg23_PARAM_SEThPK17__mavlink_message
 </UL>
 
-<P><STRONG><a name="[11c]"></a>_ZL28Msg103_VISION_SPEED_ESTIMATEhPK17__mavlink_message</STRONG> (Thumb, 352 bytes, Stack size 312 bytes, mavlinkrcprocess.o(.text._ZL28Msg103_VISION_SPEED_ESTIMATEhPK17__mavlink_message))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1312 + Unknown Stack Size
-<LI>Call Chain = _ZL28Msg103_VISION_SPEED_ESTIMATEhPK17__mavlink_message &rArr; PositionSensorUpdateVel(unsigned char, vector3&lang;double&rang;, bool, double, double, double, const double*, double) &rArr; get_history_AirframeQuatY(Quaternion*, double, double) &rArr; ReadParamGroup(SName, unsigned long long*, bool*, double) &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
+<P><STRONG><a name="[11c]"></a>_ZL28Msg103_VISION_SPEED_ESTIMATEhPK17__mavlink_message</STRONG> (Thumb, 208 bytes, Stack size 296 bytes, mavlinkrcprocess.o(.text._ZL28Msg103_VISION_SPEED_ESTIMATEhPK17__mavlink_message))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1296<LI>Call Chain = _ZL28Msg103_VISION_SPEED_ESTIMATEhPK17__mavlink_message &rArr; PositionSensorUpdateVel(unsigned char, vector3&lang;double&rang;, bool, double, double, double, const double*, double) &rArr; get_history_AirframeQuatY(Quaternion*, double, double) &rArr; ReadParamGroup(SName, unsigned long long*, bool*, double) &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[256]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetPositionSensor(unsigned char, Position_Sensor*, double)
 <LI><a href="#[34b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PositionSensorUpdateVel(unsigned char, vector3&lang;double&rang;, bool, double, double, double, const double*, double)
 <LI><a href="#[300]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PositionSensorRegister(unsigned char, Position_Sensor_Type, Position_Sensor_DataType, Position_Sensor_frame, double, double, double, const double*, double)
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Uart3(const unsigned char*, unsigned short, double, double)
 <LI><a href="#[230]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr8
-<LI><a href="#[322]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mavlinkrcprocess.o(.rodata.Mavlink_RC_Process)
 </UL>
@@ -12686,17 +12691,13 @@ Local Symbols
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ZL15Msg23_PARAM_SEThPK17__mavlink_message
 </UL>
 
-<P><STRONG><a name="[11b]"></a>_ZL31Msg102_VISION_POSITION_ESTIMATEhPK17__mavlink_message</STRONG> (Thumb, 268 bytes, Stack size 304 bytes, mavlinkrcprocess.o(.text._ZL31Msg102_VISION_POSITION_ESTIMATEhPK17__mavlink_message))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1168 + Unknown Stack Size
-<LI>Call Chain = _ZL31Msg102_VISION_POSITION_ESTIMATEhPK17__mavlink_message &rArr; PositionSensorUpdatePosition(unsigned char, vector3&lang;double&rang;, bool, double, double, double, const double*, double) &rArr; get_history_AirframeQuatY(Quaternion*, double, double) &rArr; ReadParamGroup(SName, unsigned long long*, bool*, double) &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
+<P><STRONG><a name="[11b]"></a>_ZL31Msg102_VISION_POSITION_ESTIMATEhPK17__mavlink_message</STRONG> (Thumb, 188 bytes, Stack size 296 bytes, mavlinkrcprocess.o(.text._ZL31Msg102_VISION_POSITION_ESTIMATEhPK17__mavlink_message))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1160<LI>Call Chain = _ZL31Msg102_VISION_POSITION_ESTIMATEhPK17__mavlink_message &rArr; PositionSensorUpdatePosition(unsigned char, vector3&lang;double&rang;, bool, double, double, double, const double*, double) &rArr; get_history_AirframeQuatY(Quaternion*, double, double) &rArr; ReadParamGroup(SName, unsigned long long*, bool*, double) &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[256]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetPositionSensor(unsigned char, Position_Sensor*, double)
 <LI><a href="#[36e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PositionSensorUpdatePosition(unsigned char, vector3&lang;double&rang;, bool, double, double, double, const double*, double)
 <LI><a href="#[300]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PositionSensorRegister(unsigned char, Position_Sensor_Type, Position_Sensor_DataType, Position_Sensor_frame, double, double, double, const double*, double)
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Uart3(const unsigned char*, unsigned short, double, double)
 <LI><a href="#[230]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr8
-<LI><a href="#[322]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mavlinkrcprocess.o(.rodata.Mavlink_RC_Process)
 </UL>
@@ -12925,7 +12926,7 @@ Local Symbols
 <BR>[Address Reference Count : 1]<UL><LI> navcmdprocess.o(.rodata._ZL13NavCmdProcess)
 </UL>
 <P><STRONG><a name="[139]"></a>_ZL16NavCmd22_TAKEOFFdhPdP9NavCmdInf</STRONG> (Thumb, 248 bytes, Stack size 40 bytes, navcmdprocess.o(.text._ZL16NavCmd22_TAKEOFFdhPdP9NavCmdInf))
-<BR><BR>[Stack]<UL><LI>Max Depth = 320<LI>Call Chain = _ZL16NavCmd22_TAKEOFFdhPdP9NavCmdInf &rArr; Position_Control_Takeoff_HeightGlobal(double, double) &rArr; Position_Control_Takeoff_HeightRelative(double, double) &rArr; LockCtrl(double) &rArr; xQueueTakeMutexRecursive &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
+<BR><BR>[Stack]<UL><LI>Max Depth = 360<LI>Call Chain = _ZL16NavCmd22_TAKEOFFdhPdP9NavCmdInf &rArr; Position_Control_Takeoff_HeightGlobal(double, double) &rArr; Position_Control_Takeoff_HeightRelative(double, double) &rArr; Write_Uart3(const unsigned char*, unsigned short, double, double) &rArr; xQueueTakeMutexRecursive &rArr; xQueueSemaphoreTake &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[373]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Control_Takeoff_HeightRelative(double, double)
 <LI><a href="#[2a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_Position_MSStatus()

@@ -18,6 +18,8 @@
 #include "Sensors.hpp"
 #include "SensorsBackend.hpp"
 #include "M35_Auto1.hpp"
+
+#include "drv_LED.hpp"
 char mystr[32];
 
 bool GCS_is_MP = false;
@@ -940,29 +942,33 @@ static void Msg84_SET_POSITION_TARGET_LOCAL_NED ( uint8_t Port_index, const mavl
 //位置
 static void Msg102_VISION_POSITION_ESTIMATE( uint8_t Port_index , const mavlink_message_t* msg )
 {//BY
+    
 	  const mavlink_vision_position_estimate_t* msg_rd = (mavlink_vision_position_estimate_t*)msg->payload64;
     Position_Sensor POSITION_sensor;
     vector3<double> position;
     //高度信息处理
     if( GetPositionSensor(default_vision_height_sensor_index,&POSITION_sensor)== false )
     {
+		 
         PositionSensorRegister( default_vision_height_sensor_index , \
 								Position_Sensor_Type_RelativePositioning , \
 								Position_Sensor_DataType_s_z , \
 								Position_Sensor_frame_ENU , \
 								0.05f , \
 								true ); 
+
     }
     else
     {
+		
         position.x =  0;
         position.y =  0;
         position.z = -100 * mavlink_msg_vision_position_estimate_get_z(msg);
         PositionSensorUpdatePosition( default_vision_height_sensor_index , position , true  );
 
 		// /* 屏幕打印
-		sprintf(mystr,"Z =%5.3lf\r\n\r\n",position.z);
-		Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+	//	sprintf(mystr,"Z =%5.3lf\r\n\r\n",position.z);
+	//	Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 		// */
     }
     
@@ -992,10 +998,10 @@ static void Msg103_VISION_SPEED_ESTIMATE ( uint8_t Port_index, const mavlink_mes
 		PositionSensorUpdateVel( default_vision_sensor_index , vel , true );
 
 		// /* 屏幕打印
-		sprintf(mystr,"Vx=%5.3lf\r\n\r\n",vel.x);
-		Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
-		sprintf(mystr,"Vy=%5.3lf\r\n\r\n",vel.y);
-		Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+		//sprintf(mystr,"Vx=%5.3lf\r\n\r\n",vel.x);
+		//Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+		//sprintf(mystr,"Vy=%5.3lf\r\n\r\n",vel.y);
+		//Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 		// */
     }
 }

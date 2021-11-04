@@ -219,4 +219,5 @@
   Math\vector2.hpp Math\AC_Math.hpp Math\vector3.hpp Math\Quaternion.hpp \
   Math\vector3.hpp Math\map_projection.hpp Modes\AuxFuncs.hpp \
   ControlSystem\ControlSystem.hpp Drivers\Sensors.hpp \
-  Math\quaternion.hpp Modes\M35_Auto1.hpp Modes\Modes.hpp
+  Math\quaternion.hpp Modes\M35_Auto1.hpp Modes\Modes.hpp \
+  Drivers\drv_Uart3.hpp

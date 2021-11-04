@@ -9,6 +9,13 @@
 #include "ControlSystem.hpp"
 #include "Sensors.hpp"
 #include "M35_Auto1.hpp"
+
+
+#include "drv_Uart3.hpp"
+//
+char mystr_2[32];
+//
+
 //¹Ì¼ş°æ±¾
 static void Cmd520_MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES(uint8_t port_index, const mavlink_message_t *msg)
 {
@@ -259,7 +266,16 @@ static void Cmd22_MAV_CMD_NAV_TAKEOFF(uint8_t port_index, const mavlink_message_
 	const Port *port = get_CommuPort(port_index);
 	if (Get_Guided_Mode_Enabled())
 	{
-		Position_Control_Takeoff_HeightRelative(height);
+		if(Position_Control_Takeoff_HeightRelative(height))
+		{
+			sprintf(mystr_2,"Z =%5.3lf\r\n\r\n",height);
+		     Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+		}
+		else
+		{
+			sprintf(mystr_2,"takeoff_fail\r\n\r\n");
+		     Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+		}
 		if (port->write)
 		{
 			mavlink_message_t msg_sd;
