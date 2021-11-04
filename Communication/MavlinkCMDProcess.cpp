@@ -266,6 +266,7 @@ static void Cmd22_MAV_CMD_NAV_TAKEOFF(uint8_t port_index, const mavlink_message_
 	const Port *port = get_CommuPort(port_index);
 	if (Get_Guided_Mode_Enabled())
 	{
+		Position_Control_Enable();
 		if(Position_Control_Takeoff_HeightRelative(height))
 		{
 			sprintf(mystr_2,"Z =%5.3lf\r\n\r\n",height);
