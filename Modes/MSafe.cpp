@@ -25,6 +25,10 @@
 #include "Parameters.hpp"
 #include "Commulink.hpp"
 
+#include "drv_Uart3.hpp"
+
+char tmpstr[64];
+
 //安全模式任务句柄
 TaskHandle_t MSafeTaskHandle;
 //强制返航（降落）
@@ -168,6 +172,10 @@ static void MSafe_Server(void* pvParameters)
 		get_lastXYCtrlTime(&lastXYCtrlTime);
 		get_lastZCtrlTime(&lastZCtrlTime);
 		
+		
+		sprintf(tmpstr, "Xtime=%lf,Ytime=%lf\r\n\r\n",lastXYCtrlTime.get_pass_time(),lastZCtrlTime.get_pass_time());
+		Write_Uart3((uint8_t *)tmpstr, strlen(tmpstr), 1, 1);
+
 		if( lowPowerState>0 || lastXYCtrlTime.get_pass_time()>1 || lastZCtrlTime.get_pass_time()>1 )
 		{	//低电量或控制超时
 			//强制进入MSafe控制
@@ -531,5 +539,5 @@ void init_MSafe()
 	};
 	ParamGroupRegister( "MSafe", 3, sizeof(MSafeCfg)/8, param_types, param_names, (uint64_t*)&initial_cfg );
 	
-	xTaskCreate( MSafe_Server, "MSafe", 1024, NULL, SysPriority_SafeTask, &MSafeTaskHandle);
+	// xTaskCreate( MSafe_Server, "MSafe", 1024, NULL, SysPriority_SafeTask, &MSafeTaskHandle);
 }
