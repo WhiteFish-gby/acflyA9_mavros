@@ -343,22 +343,25 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 			//while(1);
 
 			//	guided_enabled = true;
-			if (Position_Control_Enable())
+
+			
+
+			bool inFlight;
+			get_is_inFlight(&inFlight);
+			if (inFlight == true)
 			{
-				sprintf(mystr_4, "Altitude_Control_Enabled\r\n\r\n");
-				//Write_Uart3((uint8_t *)mystr_4, strlen(mystr_4), 1, 1);
+				Position_Control_Enable();
+
+				bool pos_ena;
+				is_Position_Control_Enabled(&pos_ena);
+				if (pos_ena == false)
+				{ //位置控制器无法打开返回手动模式
+					swManualMode goto Manual_Mode;
+				}
 			}
-			else
-			{
-				sprintf(mystr_4, "Altitude_Control_disabled\r\n\r\n");
-				//Write_Uart3((uint8_t *)mystr_4, strlen(mystr_4), 1, 1);
-			}
-			bool pos_ena;
-			is_Position_Control_Enabled(&pos_ena);
-			if (pos_ena == false)
-			{ //位置控制器无法打开返回手动模式
-				swManualMode goto Manual_Mode;
-			}
+			
+
+			
 
 			if (rc.available)
 			{
