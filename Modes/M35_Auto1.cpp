@@ -65,6 +65,7 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 	init_NavCmdInf(&navInf);
 	while (1)
 	{
+
 		os_delay(0.02);
 		//set_BuzzerOnOff(1);
 		if (get_CrashedState())
@@ -185,7 +186,7 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 				}
 			}
 			else
-			{ //摇杆回中可执行自动操作
+			{ //摇杆回中可执行自动操作 
 				//reqMode = AFunc_Mission;
 				//set_BuzzerOnOff(1);
 				/*判断执行任务*/
