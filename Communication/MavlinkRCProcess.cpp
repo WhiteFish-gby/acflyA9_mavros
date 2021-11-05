@@ -765,6 +765,17 @@ static void Msg76_COMMAND_LONG( uint8_t Port_index , const mavlink_message_t* ms
 	const mavlink_command_long_t* msg_rd = (mavlink_command_long_t*)msg->payload64;
 	if( msg_rd->command < Mavlink_CMD_Process_Count )
 	{
+		if (msg_rd->command == 21)
+		{
+			sprintf(mystr, "land_cmd_21_ok\r\n\r\n");
+		    Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+		}
+		else
+		{
+			sprintf(mystr, "land_cmd_unreceived\r\n\r\n");
+		    Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+		}
+		
 		if( Mavlink_CMD_Process[ msg_rd->command ] != 0 )
 			Mavlink_CMD_Process[ msg_rd->command ]( Port_index , msg );
 		else
@@ -953,7 +964,7 @@ static void Msg102_VISION_POSITION_ESTIMATE( uint8_t Port_index , const mavlink_
         PositionSensorRegister( default_vision_height_sensor_index , \
 								Position_Sensor_Type_RelativePositioning , \
 								Position_Sensor_DataType_s_z , \
-								Position_Sensor_frame_ENU , \
+								Position_Sensor_frame_BodyHeading , \
 								0.05f , \
 								true ); 
 
@@ -993,8 +1004,8 @@ static void Msg103_VISION_SPEED_ESTIMATE ( uint8_t Port_index, const mavlink_mes
 		//BodyHeading为 前左上
 		//这部分是安按照T265朝后写的
 		//修改T265朝向要修改注释！
-		vel.x = -(msg_rd->x)*100.0;
-		vel.y = -(msg_rd->y)*100.0;
+		vel.x = -(msg_rd->y)*100.0;
+		vel.y = -(msg_rd->x)*100.0;
 		PositionSensorUpdateVel( default_vision_sensor_index , vel , true );
 
 		// /* 屏幕打印

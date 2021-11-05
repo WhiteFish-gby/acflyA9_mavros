@@ -531,5 +531,5 @@ void init_MSafe()
 	};
 	ParamGroupRegister( "MSafe", 3, sizeof(MSafeCfg)/8, param_types, param_names, (uint64_t*)&initial_cfg );
 	
-	xTaskCreate( MSafe_Server, "MSafe", 1024, NULL, SysPriority_SafeTask, &MSafeTaskHandle);
+	//xTaskCreate( MSafe_Server, "MSafe", 1024, NULL, SysPriority_SafeTask, &MSafeTaskHandle);
 }
