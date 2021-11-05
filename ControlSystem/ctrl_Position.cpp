@@ -593,7 +593,7 @@ bool Position_Control_Enable(double TIMEOUT)
 		if (Position_Control_Enabled == true)
 		{ //控制器已打开
 			sprintf(mystr_3,"PF:Position_Control Already Enabled\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
+			//Write_Uart3((uint8_t *)mystr_3, strlen(mystr_3), 1, 1);
 			UnlockCtrl();
 			return false;
 		}

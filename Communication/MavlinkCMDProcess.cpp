@@ -10,7 +10,6 @@
 #include "Sensors.hpp"
 #include "M35_Auto1.hpp"
 
-
 #include "drv_Uart3.hpp"
 //
 char mystr_2[32];
@@ -267,15 +266,15 @@ static void Cmd22_MAV_CMD_NAV_TAKEOFF(uint8_t port_index, const mavlink_message_
 	if (Get_Guided_Mode_Enabled())
 	{
 		Position_Control_Enable();
-		if(Position_Control_Takeoff_HeightRelative(height))
+		if (Position_Control_Takeoff_HeightRelative(height))
 		{
-			sprintf(mystr_2,"Z =%5.3lf\r\n\r\n",height);
-		     Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+			sprintf(mystr_2, "Z =%5.3lf\r\n\r\n", height);
+			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		}
 		else
 		{
-			sprintf(mystr_2,"takeoff_fail\r\n\r\n");
-		     Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+			sprintf(mystr_2, "takeoff_fail\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		}
 		if (port->write)
 		{
@@ -338,9 +337,23 @@ static void Cmd21_MAV_CMD_NAV_LAND(uint8_t port_index, const mavlink_message_t *
 	const Port *port = get_CommuPort(port_index);
 	if (Get_Guided_Mode_Enabled())
 	{
-		Position_Control_set_TargetVelocityZ(-30);
+		sprintf(mystr_2, "guided_enabled\r\n\r\n");
+		Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+		if (Position_Control_set_TargetVelocityZ(-30))
+		{
+			sprintf(mystr_2, "land_success\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+		}
+		else
+		{
+			sprintf(mystr_2, "land_fail\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+		}
+		
 		if (port->write)
 		{
+			sprintf(mystr_2, "land_sent_success\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 			mavlink_message_t msg_sd;
 			if (mavlink_lock_chan(port_index, 0.01))
 			{
@@ -365,8 +378,12 @@ static void Cmd21_MAV_CMD_NAV_LAND(uint8_t port_index, const mavlink_message_t *
 	}
 	else
 	{
+		sprintf(mystr_2, "guided_false\r\n\r\n");
+		Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		if (port->write)
 		{
+			sprintf(mystr_2, "land_sent_false\r\n\r\n");
+			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 			mavlink_message_t msg_sd;
 			if (mavlink_lock_chan(port_index, 0.01))
 			{
@@ -409,12 +426,12 @@ static void Cmd400_MAV_CMD_COMPONENT_ARM_DISARM(uint8_t port_index, const mavlin
 				get_CommulinkCompId(), //component id
 				port_index,
 				&msg_sd,
-				msg_rd->command,							   //command
+				msg_rd->command,								  //command
 				arm_ok ? MAV_RESULT_ACCEPTED : MAV_RESULT_DENIED, //result
-				100,										   //progress
-				0,											   //param2
-				msg->sysid,									   //target system
-				msg->compid									   //target component
+				100,											  //progress
+				0,												  //param2
+				msg->sysid,										  //target system
+				msg->compid										  //target component
 			);
 			mavlink_msg_to_send_buffer(port->write,
 									   port->lock,

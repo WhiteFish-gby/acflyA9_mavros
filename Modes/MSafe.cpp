@@ -1,16 +1,16 @@
 /*
-	MSafe°²È«Ä£Ê½
-	ÓÃ»§Ä£Ê½Ò»¶¨Ê±¼ä²»½øĞĞ¿ØÖÆ
-	»òµ÷ÓÃenter_MSafe»á½øÈë´ËÄ£Ê½
+	MSafeå®‰å…¨æ¨¡å¼
+	ç”¨æˆ·æ¨¡å¼ä¸€å®šæ—¶é—´ä¸è¿›è¡Œæ§åˆ¶
+	æˆ–è°ƒç”¨enter_MSafeä¼šè¿›å…¥æ­¤æ¨¡å¼
 	
-	½øÈë°²È«Ä£Ê½ºó£¨ForceMSafeCtrl£©
-	ÓÃ»§Ä£Ê½¿ØÖÆ½«Ê§Ğ§
+	è¿›å…¥å®‰å…¨æ¨¡å¼åï¼ˆForceMSafeCtrlï¼‰
+	ç”¨æˆ·æ¨¡å¼æ§åˆ¶å°†å¤±æ•ˆ
 	
-	ÓÃ»§Ä£Ê½Í¬Ê±½øĞĞË®Æ½£¨XYÎ»ÖÃ»ò×ËÌ¬£©
-	ºÍ´¹Ö±¸ß¶È¿ØÖÆ¿ÉÍË³öMSafe»ñµÃ¿ØÖÆÈ¨
+	ç”¨æˆ·æ¨¡å¼åŒæ—¶è¿›è¡Œæ°´å¹³ï¼ˆXYä½ç½®æˆ–å§¿æ€ï¼‰
+	å’Œå‚ç›´é«˜åº¦æ§åˆ¶å¯é€€å‡ºMSafeè·å¾—æ§åˆ¶æƒ
 	
-	£¡£¡²»½¨ÒéÒ»°ãÓÃ»§¸ü¸Ä´ËÎÄ¼ş£¡£¡
-	£¡£¡´ËÎÄ¼şĞè¾­¹ıÑéÖ¤ÔÙ·¢²¼£¡£¡
+	ï¼ï¼ä¸å»ºè®®ä¸€èˆ¬ç”¨æˆ·æ›´æ”¹æ­¤æ–‡ä»¶ï¼ï¼
+	ï¼ï¼æ­¤æ–‡ä»¶éœ€ç»è¿‡éªŒè¯å†å‘å¸ƒï¼ï¼
 */
 
 #include "Basic.hpp"
@@ -29,46 +29,46 @@
 
 char tmpstr[64];
 
-//°²È«Ä£Ê½ÈÎÎñ¾ä±ú
+//å®‰å…¨æ¨¡å¼ä»»åŠ¡å¥æŸ„
 TaskHandle_t MSafeTaskHandle;
-//Ç¿ÖÆ·µº½£¨½µÂä£©
+//å¼ºåˆ¶è¿”èˆªï¼ˆé™è½ï¼‰
 bool ForceRTL = false;
 
-//°²È«Ä£Ê½²ÎÊı
+//å®‰å…¨æ¨¡å¼å‚æ•°
 struct MSafeCfg
 {
-	//×Ô¶¯·µº½Ä£Ê½
-	//0-²»×Ô¶¯·µº½
-	//1-×Ô¶¯Ä£Ê½£¨×Ô¶¯ÅĞ¶ÏµçÁ¿²»×ã·µº½£©
+	//è‡ªåŠ¨è¿”èˆªæ¨¡å¼
+	//0-ä¸è‡ªåŠ¨è¿”èˆª
+	//1-è‡ªåŠ¨æ¨¡å¼ï¼ˆè‡ªåŠ¨åˆ¤æ–­ç”µé‡ä¸è¶³è¿”èˆªï¼‰
 	uint8_t SfRtMode[8];
 	
-	//·µº½ËÙ¶È
+	//è¿”èˆªé€Ÿåº¦
 	float RtSpeed[2];
 	
-	//¾­Î³¶È¶¨Î»Éı¸ß·µº½·¶Î§
+	//ç»çº¬åº¦å®šä½å‡é«˜è¿”èˆªèŒƒå›´
 	float GbRtHRange[2];
-	//±¾µØ¶¨Î»£¨ÎŞ¾­Î³¶È£©Éı¸ß·µº½·¶Î§
+	//æœ¬åœ°å®šä½ï¼ˆæ— ç»çº¬åº¦ï¼‰å‡é«˜è¿”èˆªèŒƒå›´
 	float LcRtHRange[2];
 	
-	//¾­Î³¶È¶¨Î»Éı¸ß¸ß¶È£¨¶ÔµØ£©
+	//ç»çº¬åº¦å®šä½å‡é«˜é«˜åº¦ï¼ˆå¯¹åœ°ï¼‰
 	float GbRtHeight[2];
-	//±¾µØ¶¨Î»£¨ÎŞ¾­Î³¶È£©Éı¸ß¸ß¶È£¨¶ÔµØ£©
+	//æœ¬åœ°å®šä½ï¼ˆæ— ç»çº¬åº¦ï¼‰å‡é«˜é«˜åº¦ï¼ˆå¯¹åœ°ï¼‰
 	float LcRtHeight[2];
 	
-	//Ç¿ÖÆ·µº½µçÑ¹
+	//å¼ºåˆ¶è¿”èˆªç”µå‹
 	float FcRTLVolt[2];
-	//Ç¿ÖÆ½µÂäµçÑ¹
+	//å¼ºåˆ¶é™è½ç”µå‹
 	float FcLandVolt[2];
 }__PACKED;
 
 #define MSafeRate 20
 static void MSafe_Server(void* pvParameters)
 {
-	//×¼È·ÖÜÆÚÑÓÊ±
+	//å‡†ç¡®å‘¨æœŸå»¶æ—¶
 	TickType_t xLastWakeTime;
 	xLastWakeTime = xTaskGetTickCount();
 	
-	//²ÎÊı
+	//å‚æ•°
 	MSafeCfg cfg;
 	cfg.SfRtMode[0] = 1;	//SfRtMode
 	cfg.RtSpeed[0] = 1000;	//RtSpeed
@@ -76,59 +76,59 @@ static void MSafe_Server(void* pvParameters)
 	cfg.LcRtHRange[0] = 3000;	//LcRtHRange
 	cfg.GbRtHeight[0] = 5000;	//GbRtHeight
 	cfg.LcRtHeight[0] = 2000;	//LcRtHeight
-	cfg.FcRTLVolt[0] = 0;	//Ç¿ÖÆ·µº½µçÑ¹	
-	cfg.FcLandVolt[0] = 0;	//Ç¿ÖÆ½µÂäµçÑ¹
+	cfg.FcRTLVolt[0] = 0;	//å¼ºåˆ¶è¿”èˆªç”µå‹	
+	cfg.FcLandVolt[0] = 0;	//å¼ºåˆ¶é™è½ç”µå‹
 	uint16_t cfg_update_counter = 60000;
 	
-	//µÍµçÁ¿×´Ì¬
+	//ä½ç”µé‡çŠ¶æ€
 	uint8_t lowPowerState = 0;
 	uint16_t lowPowerState1_counter = 0;
 	uint16_t lowPowerState2_counter = 0;
 	
-	//ÊÇ·ñ¸Õ½øÈë×Ô¶¯Ä£Ê½
-	//16-32ÓĞ¶¨Î»È«×Ô¶¯Ä£Ê½
-	//32-48ÎŞ¶¨Î»×Ô¶¯Ä£Ê½
+	//æ˜¯å¦åˆšè¿›å…¥è‡ªåŠ¨æ¨¡å¼
+	//16-32æœ‰å®šä½å…¨è‡ªåŠ¨æ¨¡å¼
+	//32-48æ— å®šä½è‡ªåŠ¨æ¨¡å¼
 	uint8_t firstAuto = 0;
 	NavCmdInf navInf;
 	init_NavCmdInf(&navInf);
 	uint16_t current_mission_ind;
-	//·µº½¸ß¶È
+	//è¿”èˆªé«˜åº¦
 	double RtHeight = -1;
 	while(1)
 	{
 		vTaskDelayUntil( &xLastWakeTime, (1.0/MSafeRate)*configTICK_RATE_HZ );
 		
-		//»ñÈ¡µçÑ¹
+		//è·å–ç”µå‹
 		float mainBatVolt = get_MainBatteryVoltage_filted();
 		
-		//5Ãë¸üĞÂ¶ÁÈ¡Ò»´ÎÅäÖÃ
+		//5ç§’æ›´æ–°è¯»å–ä¸€æ¬¡é…ç½®
 		if( ++cfg_update_counter >= 5*MSafeRate )
 		{
 			ReadParamGroup( "MSafe", (uint64_t*)&cfg, 0 );
 		}
 		
-		//»ñÈ¡ÊÇ·ñ´ò¿ª¿ØÖÆÆ÷
-		//¿ØÖÆÆ÷Ã»´ò¿ª²»½øĞĞ½øÒ»²½²Ù×÷
+		//è·å–æ˜¯å¦æ‰“å¼€æ§åˆ¶å™¨
+		//æ§åˆ¶å™¨æ²¡æ‰“å¼€ä¸è¿›è¡Œè¿›ä¸€æ­¥æ“ä½œ
 		bool attCtrlEna;
 		is_Attitude_Control_Enabled(&attCtrlEna);
 		if( attCtrlEna==false )
 		{
-			//ÍË³ö°²È«Ä£Ê½
+			//é€€å‡ºå®‰å…¨æ¨¡å¼
 			ForceMSafeCtrl = false;
-			//¸´Î»×Ô¶¯¿ØÖÆ¼ÆÊ±Æ÷
+			//å¤ä½è‡ªåŠ¨æ§åˆ¶è®¡æ—¶å™¨
 			firstAuto = 0;
 			
-			//¸´Î»µÍµçÁ¿¼ì²â
+			//å¤ä½ä½ç”µé‡æ£€æµ‹
 			if( cfg.FcRTLVolt[0]<=5 || mainBatVolt<=7 || mainBatVolt>cfg.FcRTLVolt[0] )
 				lowPowerState = 0;
 			continue;
 		}		
 		
-		//ÅĞ¶ÏµÍµçÁ¿
+		//åˆ¤æ–­ä½ç”µé‡
 		if( mainBatVolt > 7 ) 
 		{
 			if( cfg.FcRTLVolt[0] > 5 )
-			{	//ÅĞ¶Ï·µº½µçÑ¹
+			{	//åˆ¤æ–­è¿”èˆªç”µå‹
 				if( mainBatVolt < cfg.FcRTLVolt[0] )
 				{
 					if( lowPowerState < 1 )
@@ -146,7 +146,7 @@ static void MSafe_Server(void* pvParameters)
 					lowPowerState1_counter = 0;
 			}
 			else if( cfg.FcLandVolt[0]>5 )
-			{	//ÅĞ¶Ï½µÂäµçÑ¹
+			{	//åˆ¤æ–­é™è½ç”µå‹
 				if( mainBatVolt < cfg.FcLandVolt[0] )
 				{
 					if( lowPowerState < 2 )
@@ -167,7 +167,7 @@ static void MSafe_Server(void* pvParameters)
 		else
 			lowPowerState1_counter = lowPowerState2_counter = 0;
 		
-		//»ñÈ¡ÉÏ´Î¿ØÖÆÊ±¼ä
+		//è·å–ä¸Šæ¬¡æ§åˆ¶æ—¶é—´
 		TIME lastXYCtrlTime, lastZCtrlTime;
 		get_lastXYCtrlTime(&lastXYCtrlTime);
 		get_lastZCtrlTime(&lastZCtrlTime);
@@ -177,19 +177,19 @@ static void MSafe_Server(void* pvParameters)
 		Write_Uart3((uint8_t *)tmpstr, strlen(tmpstr), 1, 1);
 
 		if( lowPowerState>0 || lastXYCtrlTime.get_pass_time()>1 || lastZCtrlTime.get_pass_time()>1 )
-		{	//µÍµçÁ¿»ò¿ØÖÆ³¬Ê±
-			//Ç¿ÖÆ½øÈëMSafe¿ØÖÆ
+		{	//ä½ç”µé‡æˆ–æ§åˆ¶è¶…æ—¶
+			//å¼ºåˆ¶è¿›å…¥MSafeæ§åˆ¶
 			ForceMSafeCtrl = true;			
-			//´ò¿ª¸ß¶È¿ØÖÆÆ÷
+			//æ‰“å¼€é«˜åº¦æ§åˆ¶å™¨
 			Altitude_Control_Enable();
 			
-			//»ñÈ¡½ÓÊÕ»ú
+			//è·å–æ¥æ”¶æœº
 			Receiver rc;
 			getReceiver(&rc);
 			
-			//ÅĞ¶ÏÊÇ·ñÊ¹ÓÃÒ£¿ØÆ÷¿ØÖÆ
-			//ÎŞÒ£¿ØÆ÷»òForceRTLÇÒÒ£¿Ø»ØÖĞÊ±
-			//Ö´ĞĞ·µº½
+			//åˆ¤æ–­æ˜¯å¦ä½¿ç”¨é¥æ§å™¨æ§åˆ¶
+			//æ— é¥æ§å™¨æˆ–ForceRTLä¸”é¥æ§å›ä¸­æ—¶
+			//æ‰§è¡Œè¿”èˆª
 			bool UseRcCtrl = false;
 			if( rc.available )
 			{
@@ -208,12 +208,12 @@ static void MSafe_Server(void* pvParameters)
 			}
 			
 			if( UseRcCtrl )
-			{	//Ê¹ÓÃÒ£¿ØÆ÷¿ØÖÆ
+			{	//ä½¿ç”¨é¥æ§å™¨æ§åˆ¶
 		
-				//¸´Î»×Ô¶¯¿ØÖÆ¼ÆÊ±Æ÷
+				//å¤ä½è‡ªåŠ¨æ§åˆ¶è®¡æ—¶å™¨
 				firstAuto = 0;
 				
-				//¸ù¾İ5Í¨×´Ì¬Ñ¡Ôñ¶¨µã¶¨¸ß				
+				//æ ¹æ®5é€šçŠ¶æ€é€‰æ‹©å®šç‚¹å®šé«˜				
 				if( rc.data[4] > 60 )
 				{
 					Position_Control_Enable();
@@ -226,21 +226,21 @@ static void MSafe_Server(void* pvParameters)
 				bool posCtrlEna;
 				is_Position_Control_Enabled(&posCtrlEna);
 				
-				//ÓÍÃÅ¸Ë¿ØÖÆ´¹Ö±ËÙ¶È
+				//æ²¹é—¨æ†æ§åˆ¶å‚ç›´é€Ÿåº¦
 				if( in_symmetry_range_mid( rc.data[0] , 50 , 5 ) )
 					Position_Control_set_ZLock();
 				else
 					Position_Control_set_TargetVelocityZ( ( remove_deadband( rc.data[0] - 50.0 , 5.0 ) ) * 6 );
-				//Æ«º½¸ËÔÚÖĞ¼äËøÆ«º½
-				//²»ÔÚÖĞ¼ä¿ØÖÆÆ«º½ËÙ¶È
+				//åèˆªæ†åœ¨ä¸­é—´é”åèˆª
+				//ä¸åœ¨ä¸­é—´æ§åˆ¶åèˆªé€Ÿåº¦
 				if( in_symmetry_range_mid( rc.data[1] , 50 , 5 ) )
 					Attitude_Control_set_YawLock();
 				else
 					Attitude_Control_set_Target_YawRate( ( 50 - rc.data[1] )*0.05 );
-				//Ë®Æ½¿ØÖÆ
+				//æ°´å¹³æ§åˆ¶
 				if( posCtrlEna )
 				{
-					//¸©Ñöºá¹ö¸Ë¿ØË®Æ½ËÙ¶È
+					//ä¿¯ä»°æ¨ªæ»šæ†æ§æ°´å¹³é€Ÿåº¦
 					if( in_symmetry_range_mid( rc.data[3] , 50 , 5 ) && in_symmetry_range_mid( rc.data[2] , 50 , 5 ) )
 						Position_Control_set_XYLock();
 					else
@@ -257,7 +257,7 @@ static void MSafe_Server(void* pvParameters)
 				}
 				else
 				{
-					//¸©Ñöºá¹ö¸Ë¿Ø¸©Ñöºá¹ö
+					//ä¿¯ä»°æ¨ªæ»šæ†æ§ä¿¯ä»°æ¨ªæ»š
 					Attitude_Control_set_Target_RollPitch( 
 						( rc.data[3] - 50 )*0.015,
 						( rc.data[2] - 50 )*0.015
@@ -265,28 +265,28 @@ static void MSafe_Server(void* pvParameters)
 				}
 			}
 			else
-			{	//ÎŞÒ£¿ØĞÅºÅ
-				//³¢ÊÔ´ò¿ªË®Æ½Î»ÖÃ¿ØÖÆÆ÷
+			{	//æ— é¥æ§ä¿¡å·
+				//å°è¯•æ‰“å¼€æ°´å¹³ä½ç½®æ§åˆ¶å™¨
 				Position_Control_Enable();
 				
 				bool posCtrlEna;
 				is_Position_Control_Enabled(&posCtrlEna);
 				
 				if( posCtrlEna )
-				{	//ÒÑ´ò¿ªË®Æ½Î»ÖÃ¿ØÖÆÆ÷
+				{	//å·²æ‰“å¼€æ°´å¹³ä½ç½®æ§åˆ¶å™¨
 					
 					if( firstAuto != 31 )
-					{	//¸Õ½øÈëÊ§¿Ø×´Ì¬
-						//É²³µËøÎ»ÖÃ
+					{	//åˆšè¿›å…¥å¤±æ§çŠ¶æ€
+						//åˆ¹è½¦é”ä½ç½®
 						Position_Control_set_XYLock();
 						Position_Control_set_ZLock();
 						if( firstAuto != 16 )
-						{	//³õÊ¼»¯µÈ´ı
+						{	//åˆå§‹åŒ–ç­‰å¾…
 							init_NavCmdInf(&navInf);
 							firstAuto = 16;
 						}
 						else
-						{	//É²³µºóµÈ´ı2Ãë
+						{	//åˆ¹è½¦åç­‰å¾…2ç§’
 							Position_ControlMode alt_mode, pos_mode;
 							get_Altitude_ControlMode(&alt_mode);
 							get_Position_ControlMode(&pos_mode);
@@ -302,9 +302,9 @@ static void MSafe_Server(void* pvParameters)
 						}
 					}
 					else
-					{	//¿ªÊ¼×Ô¶¯·ÉĞĞ£¨·µº½£©
+					{	//å¼€å§‹è‡ªåŠ¨é£è¡Œï¼ˆè¿”èˆªï¼‰
 						
-						//½µÂäµçÑ¹Ç¿ÖÆ½µÂä
+						//é™è½ç”µå‹å¼ºåˆ¶é™è½
 						if( lowPowerState == 2 )
 						{
 							set_mav_mode( 
@@ -323,41 +323,41 @@ static void MSafe_Server(void* pvParameters)
 						{
 							
 							case 0:
-							{	//ÅĞ¶Ï·µº½¾àÀëÊÇ·ñĞèÒªÉı¸ß																
+							{	//åˆ¤æ–­è¿”èˆªè·ç¦»æ˜¯å¦éœ€è¦å‡é«˜																
 								vector2<double> homeP;
 								if( getHomeLatLon(&homeP) )
-								{	//·µº½ÖÁ¾­Î³¶È
+								{	//è¿”èˆªè‡³ç»çº¬åº¦
 									
-									//»ñÈ¡×îÓÅÈ«Çò¶¨Î»´«¸ĞÆ÷ĞÅÏ¢
+									//è·å–æœ€ä¼˜å…¨çƒå®šä½ä¼ æ„Ÿå™¨ä¿¡æ¯
 									PosSensorHealthInf2 global_inf;
 									if( get_OptimalGlobal_XY( &global_inf ) == false )
 									{
 										if( getHomePoint(&homeP) )
 											goto RtLocal;
 										else
-										{	//ÎŞ·µº½µã
-											//Ö±½Ó½µÂä
+										{	//æ— è¿”èˆªç‚¹
+											//ç›´æ¥é™è½
 											current_mission_ind = 3;
 											break;
 										}
 									}
-									//»ñÈ¡Ö¸¶¨¾­Î³¶ÈÆ½Ãæ×ø±ê
+									//è·å–æŒ‡å®šç»çº¬åº¦å¹³é¢åæ ‡
 									double x, y;
 									map_projection_project( &global_inf.mp, homeP.x, homeP.y, &x, &y );
 									x -= global_inf.HOffset.x;
 									y -= global_inf.HOffset.y;
 									double RtDistanceSq = sq(y - global_inf.PositionENU.y) + sq(x - global_inf.PositionENU.x);
 									
-									//ÅĞ¶ÏÊÇ·ñ´óÓÚÉı¸ß·µº½¾àÀë
+									//åˆ¤æ–­æ˜¯å¦å¤§äºå‡é«˜è¿”èˆªè·ç¦»
 									if( RtDistanceSq > sq(cfg.GbRtHRange[0]) )
-									{	//Éı¸ß·µº½
+									{	//å‡é«˜è¿”èˆª
 										RtHeight = cfg.GbRtHeight[0];
 										double homeZ;
 										getHomeLocalZ(&homeZ);
 										vector3<double> pos;
 										get_Position_Ctrl(&pos);
 										if( RtHeight>0 && homeZ+RtHeight>pos.z )
-										{	//·µº½¸ß¶È´óÓÚµ±Ç°¸ß¶È²Å½øĞĞÉı¸ß
+										{	//è¿”èˆªé«˜åº¦å¤§äºå½“å‰é«˜åº¦æ‰è¿›è¡Œå‡é«˜
 											
 										}
 										else
@@ -366,27 +366,27 @@ static void MSafe_Server(void* pvParameters)
 									else
 										RtHeight = -1;
 									
-									//ÇĞ»»ÖÁÉı¸ß×´Ì¬
+									//åˆ‡æ¢è‡³å‡é«˜çŠ¶æ€
 									init_NavCmdInf(&navInf);								
 									++current_mission_ind;
 								}
 								else if( getHomePoint(&homeP) )
-								{	//·µº½ÖÁLocal×ø±ê
+								{	//è¿”èˆªè‡³Localåæ ‡
 RtLocal:
 									vector3<double> position;
 									get_Position_Ctrl(&position);
 									double RtDistanceSq = sq(homeP.y - position.y) + sq(homeP.x - position.x);
 									
-									//ÅĞ¶ÏÊÇ·ñ´óÓÚÉı¸ß·µº½¾àÀë
+									//åˆ¤æ–­æ˜¯å¦å¤§äºå‡é«˜è¿”èˆªè·ç¦»
 									if( RtDistanceSq > sq(cfg.LcRtHRange[0]) )
-									{	//Éı¸ß·µº½
+									{	//å‡é«˜è¿”èˆª
 										RtHeight = cfg.LcRtHeight[0];
 										double homeZ;
 										getHomeLocalZ(&homeZ);
 										vector3<double> pos;
 										get_Position_Ctrl(&pos);
 										if( RtHeight>0 && homeZ+RtHeight>pos.z )
-										{	//·µº½¸ß¶È´óÓÚµ±Ç°¸ß¶È²Å½øĞĞÉı¸ß
+										{	//è¿”èˆªé«˜åº¦å¤§äºå½“å‰é«˜åº¦æ‰è¿›è¡Œå‡é«˜
 											
 										}
 										else
@@ -395,13 +395,13 @@ RtLocal:
 									else
 										RtHeight = -1;
 									
-									//ÇĞ»»ÖÁÉı¸ß×´Ì¬
+									//åˆ‡æ¢è‡³å‡é«˜çŠ¶æ€
 									init_NavCmdInf(&navInf);								
 									++current_mission_ind;
 								}
 								else
-								{	//ÎŞ·µº½µã
-									//Ö±½Ó½µÂä
+								{	//æ— è¿”èˆªç‚¹
+									//ç›´æ¥é™è½
 									current_mission_ind = 3;
 									break;
 								}
@@ -409,7 +409,7 @@ RtLocal:
 							}
 							
 							case 1:
-							{	//Éı¸ßµ½Ö¸¶¨¶ÔµØ¸ß¶È
+							{	//å‡é«˜åˆ°æŒ‡å®šå¯¹åœ°é«˜åº¦
 								double homeZ;
 								getHomeLocalZ(&homeZ);
 								vector3<double> pos;
@@ -439,7 +439,7 @@ RtLocal:
 							}
 							
 							case 2:
-							{	//»Øµ½Homeµã
+							{	//å›åˆ°Homeç‚¹
 								double params[7];
 								params[0] = 0;
 								params[1] = 0;
@@ -458,7 +458,7 @@ RtLocal:
 							
 							default:
 							case 3:
-							{	//½µÂä
+							{	//é™è½
 								Position_Control_set_XYLock();
 								Position_Control_set_TargetVelocityZ(-50);
 								break;
@@ -468,17 +468,17 @@ RtLocal:
 					}
 				}
 				else
-				{	//ÎŞ·¨´ò¿ªÎ»ÖÃ¿ØÖÆÆ÷
-					//ÈÃ×ËÌ¬»Ø¸´Ë®Æ½
+				{	//æ— æ³•æ‰“å¼€ä½ç½®æ§åˆ¶å™¨
+					//è®©å§¿æ€å›å¤æ°´å¹³
 					Attitude_Control_set_Target_RollPitch( 0, 0 );
-					//ÏÂ½µ
+					//ä¸‹é™
 					Position_Control_set_TargetVelocityZ(-50);
-					//¸´Î»×Ô¶¯¿ØÖÆ¼ÆÊ±Æ÷
+					//å¤ä½è‡ªåŠ¨æ§åˆ¶è®¡æ—¶å™¨
 					firstAuto = 0;
 				}
 			}
 			
-			//ÒÑ½µÂä¹Ø±Õ¿ØÖÆÆ÷²¢ÍË³öMSafe
+			//å·²é™è½å…³é—­æ§åˆ¶å™¨å¹¶é€€å‡ºMSafe
 			bool inFlight;
 			get_is_inFlight(&inFlight);
 			if( inFlight==false )
@@ -492,7 +492,7 @@ RtLocal:
 		{
 			ForceMSafeCtrl = false;
 			
-			//¸´Î»×Ô¶¯¿ØÖÆ¼ÆÊ±Æ÷
+			//å¤ä½è‡ªåŠ¨æ§åˆ¶è®¡æ—¶å™¨
 			firstAuto = 0;
 		}
 	}
@@ -500,7 +500,7 @@ RtLocal:
 
 void init_MSafe()
 {
-	//×¢²á²ÎÊı
+	//æ³¨å†Œå‚æ•°
 	MSafeCfg initial_cfg;
 	initial_cfg.SfRtMode[0] = 1;	//SfRtMode
 	initial_cfg.RtSpeed[0] = 1000;	//RtSpeed
@@ -508,8 +508,8 @@ void init_MSafe()
 	initial_cfg.LcRtHRange[0] = 1500;	//LcRtHRange
 	initial_cfg.GbRtHeight[0] = 5000;	//GbRtHeight
 	initial_cfg.LcRtHeight[0] = 2000;	//LcRtHeight
-	initial_cfg.FcRTLVolt[0] = 0;	//Ç¿ÖÆ·µº½µçÑ¹	
-	initial_cfg.FcLandVolt[0] = 0;	//Ç¿ÖÆ½µÂäµçÑ¹
+	initial_cfg.FcRTLVolt[0] = 0;	//å¼ºåˆ¶è¿”èˆªç”µå‹	
+	initial_cfg.FcLandVolt[0] = 0;	//å¼ºåˆ¶é™è½ç”µå‹
 	
 	MAV_PARAM_TYPE param_types[] = {
 		MAV_PARAM_TYPE_UINT8 ,	//SfRtMode
@@ -521,8 +521,8 @@ void init_MSafe()
 		MAV_PARAM_TYPE_REAL32 ,	//GbRtHeight
 		MAV_PARAM_TYPE_REAL32 ,	//LcRtHeight
 		
-		MAV_PARAM_TYPE_REAL32 ,	//Ç¿ÖÆ·µº½µçÑ¹		
-		MAV_PARAM_TYPE_REAL32 ,	//Ç¿ÖÆ½µÂäµçÑ¹
+		MAV_PARAM_TYPE_REAL32 ,	//å¼ºåˆ¶è¿”èˆªç”µå‹		
+		MAV_PARAM_TYPE_REAL32 ,	//å¼ºåˆ¶é™è½ç”µå‹
 	};
 	SName param_names[] = {
 		"Sf_SfRtMode" ,	//SfRtMode		
@@ -534,8 +534,8 @@ void init_MSafe()
 		"Sf_GbRtHeight" ,	//GbRtHeight		
 		"Sf_LcRtHeight" ,	//LcRtHeight
 		
-		"Sf_FcRTLVolt" , //Ç¿ÖÆ·µº½µçÑ¹
-		"Sf_FcLandVolt" , //Ç¿ÖÆ½µÂäµçÑ¹
+		"Sf_FcRTLVolt" , //å¼ºåˆ¶è¿”èˆªç”µå‹
+		"Sf_FcLandVolt" , //å¼ºåˆ¶é™è½ç”µå‹
 	};
 	ParamGroupRegister( "MSafe", 3, sizeof(MSafeCfg)/8, param_types, param_names, (uint64_t*)&initial_cfg );
 	

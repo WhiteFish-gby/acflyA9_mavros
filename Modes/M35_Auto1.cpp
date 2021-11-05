@@ -344,24 +344,14 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 
 			//	guided_enabled = true;
 
-			
+			Position_Control_Enable();
 
-			bool inFlight;
-			get_is_inFlight(&inFlight);
-			if (inFlight == true)
-			{
-				Position_Control_Enable();
-
-				bool pos_ena;
-				is_Position_Control_Enabled(&pos_ena);
-				if (pos_ena == false)
-				{ //位置控制器无法打开返回手动模式
-					swManualMode goto Manual_Mode;
-				}
+			bool pos_ena;
+			is_Position_Control_Enabled(&pos_ena);
+			if (pos_ena == false)
+			{ //位置控制器无法打开返回手动模式
+				swManualMode goto Manual_Mode;
 			}
-			
-
-			
 
 			if (rc.available)
 			{
