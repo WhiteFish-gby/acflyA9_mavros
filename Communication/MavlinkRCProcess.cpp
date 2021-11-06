@@ -972,30 +972,36 @@ static void Msg84_SET_POSITION_TARGET_LOCAL_NED(uint8_t Port_index, const mavlin
 			float Vy = (msg_rd->vy) * 100;
 			float Vz = (msg_rd->vz) * 100;
 			float yaw_rate = msg_rd->yaw_rate;
-			sprintf(mystr, "frame_9_ok\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+			// sprintf(mystr, "frame_9_ok\r\n\r\n");
+			// Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 			// if (!((msg_rd->type_mask & POSITION_TARGET_TYPEMASK_X_IGNORE) || (msg_rd->type_mask & POSITION_TARGET_TYPEMASK_Y_IGNORE) || (msg_rd->type_mask & POSITION_TARGET_TYPEMASK_Z_IGNORE)))
+			
+			//同时给定3方向的值才进入控制
 			if (!((msg_rd->type_mask & POSITION_TARGET_TYPEMASK_VX_IGNORE) || (msg_rd->type_mask & POSITION_TARGET_TYPEMASK_VY_IGNORE) || (msg_rd->type_mask & POSITION_TARGET_TYPEMASK_VZ_IGNORE)))
 			{
-				if (Vx == 0 && Vy == 0 && Vz == 0)
+				if (fabs(Vx) < 1E-3 && fabs(Vy) < 1E-3)
 				{
 					Position_Control_set_XYLock();
-					sprintf(mystr, "xy_lock\r\n\r\n");
-					Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 				}
 				else
 				{
 					Position_Control_set_TargetVelocityBodyHeadingXY_AngleLimit(Vx, Vy);
+				}
+
+				if (fabs(Vz) < 1E-3)
+				{
+					Position_Control_set_ZLock();
+				}
+				else
+				{
 					Position_Control_set_TargetVelocityZ(Vz);
-					sprintf(mystr, "Vx = %5.3f,Vy = %5.3f,Vz = %5.3f\r\n\r\n", Vx, Vy,Vz);
-					Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 				}
 			}
 			if (!(msg_rd->type_mask & POSITION_TARGET_TYPEMASK_YAW_RATE_IGNORE))
 			{
 				Attitude_Control_set_Target_YawRate(yaw_rate);
-				sprintf(mystr, "yaw_rate = %5.3f\r\n\r\n", yaw_rate);
-				Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+				// sprintf(mystr, "yaw_rate = %5.3f\r\n\r\n", yaw_rate);
+				// Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 			}
 		}
 		break;
