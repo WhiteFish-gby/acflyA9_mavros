@@ -999,9 +999,17 @@ static void Msg84_SET_POSITION_TARGET_LOCAL_NED(uint8_t Port_index, const mavlin
 			}
 			if (!(msg_rd->type_mask & POSITION_TARGET_TYPEMASK_YAW_RATE_IGNORE))
 			{
-				Attitude_Control_set_Target_YawRate(yaw_rate);
+				//Attitude_Control_set_Target_YawRate(yaw_rate);
 				// sprintf(mystr, "yaw_rate = %5.3f\r\n\r\n", yaw_rate);
 				// Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+				if (fabs(yaw_rate) < 1E-3)
+				{
+					Attitude_Control_set_YawLock();
+				}
+				else
+				{
+					Attitude_Control_set_Target_YawRate(yaw_rate);
+				}
 			}
 		}
 		break;
