@@ -372,7 +372,14 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 				PX4_CUSTOM_MAIN_MODE_OFFBOARD,
 				0);
 			guided_enabled = true;
-
+			if (msg_available)
+			{
+				if (msg.cmd == 2020)
+				{
+					Attitude_Control_Disable();
+				    return MR_OK;
+				}
+			}
 			/*guided 2021_10_31 gby*/
 
 			// 			if( mode_switched )

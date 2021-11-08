@@ -79,6 +79,22 @@ static void Debug_task(void* pvParameters)
 																 port->unlock,
 																 &msg_sd, 0, -1);
 																 
+			Position_Sensor pos3;
+			GetPositionSensor(default_vision_height_sensor_index,&pos3);
+			mavlink_msg_debug_vect_pack_chan( 
+				get_CommulinkSysId() ,	//system id
+				get_CommulinkCompId() ,	//component id
+				port_id , 	//chan
+				&msg_sd ,
+				"6" ,	//name
+				TIME::get_System_Run_Time() * 1e6 , 	//boot ms
+				debug_test[6] ,
+				debug_test[7] ,
+				debug_test[8] );
+			mavlink_msg_to_send_buffer(port->write, 
+																 port->lock,
+																 port->unlock,
+																 &msg_sd, 0, -1);
 			get_AccelerationENU_Ctrl(&vec);
 			mavlink_msg_debug_vect_pack_chan( 
 				get_CommulinkSysId() ,	//system id
