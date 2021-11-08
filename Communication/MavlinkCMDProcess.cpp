@@ -349,7 +349,7 @@ static void Cmd21_MAV_CMD_NAV_LAND(uint8_t port_index, const mavlink_message_t *
 			sprintf(mystr_2, "land_fail\r\n\r\n");
 			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		}
-		
+
 		if (port->write)
 		{
 			sprintf(mystr_2, "land_sent_success\r\n\r\n");
@@ -414,7 +414,21 @@ static void Cmd400_MAV_CMD_COMPONENT_ARM_DISARM(uint8_t port_index, const mavlin
 {
 	const mavlink_command_long_t *msg_rd = (mavlink_command_long_t *)msg->payload64;
 	const Port *port = get_CommuPort(port_index);
-	bool arm_ok = set_mav_mode_arm();
+	//bool arm_ok = set_mav_mode_arm();
+	bool disarm_ok = set_mav_mode_disarm();
+	if (disarm_ok)
+	{
+		ModeMsg mode_msg;
+		mode_msg.cmd = 2020;
+		mode_msg.params[0] = 0;
+		mode_msg.params[1] = 0;
+		mode_msg.params[2] = 0;
+		mode_msg.params[3] = 0;
+		mode_msg.params[4] = 0;
+		mode_msg.params[5] = 0;
+		mode_msg.params[6] = 0;
+		SendMsgToMode(mode_msg, 0.01);
+	}
 	//bool disarm_ok = set_mav_mode_disarm();
 	if (port->write)
 	{
@@ -427,7 +441,7 @@ static void Cmd400_MAV_CMD_COMPONENT_ARM_DISARM(uint8_t port_index, const mavlin
 				port_index,
 				&msg_sd,
 				msg_rd->command,								  //command
-				arm_ok ? MAV_RESULT_ACCEPTED : MAV_RESULT_DENIED, //result
+				disarm_ok ? MAV_RESULT_ACCEPTED : MAV_RESULT_DENIED, //result
 				100,											  //progress
 				0,												  //param2
 				msg->sysid,										  //target system
