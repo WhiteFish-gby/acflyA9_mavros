@@ -31,7 +31,7 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 	if (!Altitude_Control_Enable())
 	{
 		sprintf(mystr_4, "altitude_control_enabled_in_M35\r\n\r\n");
-		Write_Uart3((uint8_t *)mystr_4, strlen(mystr_4), 1, 1);
+		//Write_Uart3((uint8_t *)mystr_4, strlen(mystr_4), 1, 1);
 		flag_mine = 0;
 	}
 	Position_Control_Enable();
@@ -65,7 +65,7 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 	while (1)
 	{
 		os_delay(0.02);
-		//set_BuzzerOnOff(1);
+		// set_BuzzerOnOff(1);
 		if (get_CrashedState())
 		{ //侧翻加锁
 			Attitude_Control_Disable();
@@ -103,16 +103,16 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 						if (mavlink_lock_chan(port_index, 0.01))
 						{
 							mavlink_msg_command_ack_pack_chan(
-								get_CommulinkSysId(),  //system id
-								get_CommulinkCompId(), //component id
+								get_CommulinkSysId(),  // system id
+								get_CommulinkCompId(), // component id
 								port_index,
 								&msg_sd,
-								msg.cmd,			 //command
-								MAV_RESULT_ACCEPTED, //result
-								100,				 //progress
-								0,					 //param2
-								msg.sd_sysid,		 //target system
-								msg.sd_compid		 //target component
+								msg.cmd,			 // command
+								MAV_RESULT_ACCEPTED, // result
+								100,				 // progress
+								0,					 // param2
+								msg.sd_sysid,		 // target system
+								msg.sd_compid		 // target component
 							);
 							mavlink_msg_to_send_buffer(port->write,
 													   port->lock,
@@ -136,7 +136,7 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 		if (msg_available && msg.cmd == 176)
 		{ //指令更改模式
 			if ((int)msg.params[0] & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED)
-			{ //mavlink定义模式
+			{ // mavlink定义模式
 				px4_custom_mode t_mav_mode;
 				t_mav_mode.data = msg.params[1];
 				if (t_mav_mode.main_mode == PX4_CUSTOM_MAIN_MODE_POSCTL)
@@ -185,8 +185,8 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 			}
 			else
 			{ //摇杆回中可执行自动操作
-				//reqMode = AFunc_Mission;
-				//set_BuzzerOnOff(1);
+				// reqMode = AFunc_Mission;
+				// set_BuzzerOnOff(1);
 				/*判断执行任务*/
 				if (MFunc_cfg.MissionBt[0] >= 2 && MFunc_cfg.MissionBt[0] <= 4)
 				{ //按钮按下执行任务
@@ -329,7 +329,7 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 			// if(set_mav_mode_guided())
 			// {
 			// set_BuzzerOnOff(1);
-			//set_mav_mode_guided();
+			// set_mav_mode_guided();
 			// }
 			// uint16_t tmp_mode,tmp_main_mode,tmp_sub_mode;
 			// get_mav_mode(&tmp_mode, &tmp_main_mode, &tmp_sub_mode);
@@ -340,7 +340,7 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 			// {
 			// 	set_BuzzerOnOff(1);
 			// }
-			//while(1);
+			// while(1);
 
 			//	guided_enabled = true;
 
@@ -377,7 +377,12 @@ ModeResult M35_Auto1::main_func(void *param1, uint32_t param2)
 				if (msg.cmd == 2020)
 				{
 					Attitude_Control_Disable();
-				    return MR_OK;
+					return MR_OK;
+				}
+				if (msg.cmd == 2021)
+				{
+					sprintf(mystr_4, "info:\r\n\r\n", msg.params);
+					Write_Uart3((uint8_t *)mystr_4, strlen(mystr_4), 1, 1);
 				}
 			}
 			/*guided 2021_10_31 gby*/

@@ -269,12 +269,12 @@ static void Cmd22_MAV_CMD_NAV_TAKEOFF(uint8_t port_index, const mavlink_message_
 		if (Position_Control_Takeoff_HeightRelative(height))
 		{
 			sprintf(mystr_2, "Z =%5.3lf\r\n\r\n", height);
-			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+			//Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		}
 		else
 		{
 			sprintf(mystr_2, "takeoff_fail\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+			//Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		}
 		if (port->write)
 		{
@@ -338,22 +338,22 @@ static void Cmd21_MAV_CMD_NAV_LAND(uint8_t port_index, const mavlink_message_t *
 	if (Get_Guided_Mode_Enabled())
 	{
 		sprintf(mystr_2, "guided_enabled\r\n\r\n");
-		Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+		//Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		if (Position_Control_set_TargetVelocityZ(-30))
 		{
 			sprintf(mystr_2, "land_success\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+			//Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		}
 		else
 		{
 			sprintf(mystr_2, "land_fail\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+			//Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		}
 
 		if (port->write)
 		{
 			sprintf(mystr_2, "land_sent_success\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+			//Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 			mavlink_message_t msg_sd;
 			if (mavlink_lock_chan(port_index, 0.01))
 			{
@@ -379,11 +379,11 @@ static void Cmd21_MAV_CMD_NAV_LAND(uint8_t port_index, const mavlink_message_t *
 	else
 	{
 		sprintf(mystr_2, "guided_false\r\n\r\n");
-		Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+		//Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 		if (port->write)
 		{
 			sprintf(mystr_2, "land_sent_false\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
+			//Write_Uart3((uint8_t *)mystr_2, strlen(mystr_2), 1, 1);
 			mavlink_message_t msg_sd;
 			if (mavlink_lock_chan(port_index, 0.01))
 			{

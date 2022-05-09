@@ -575,7 +575,7 @@ static void Commulink_Server(void *pvParameters)
 			char FuncName_buf[17];
 			char ParamName_buf[17];
 			sprintf(FuncName_buf, "Lk_Uart%dFunc", i);
-			sprintf(ParamName_buf, "Lk_Uart%dParam", i);
+			(ParamName_buf, "Lk_Uart%dParam", i);
 
 			uint8_t Func_temp[8];
 			uint32_t Param_temp[2];

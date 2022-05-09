@@ -779,7 +779,7 @@ static void Msg76_COMMAND_LONG(uint8_t Port_index, const mavlink_message_t *msg)
 		if (msg_rd->command == 21)
 		{
 			sprintf(mystr, "land_cmd_21_ok\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+			//Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 		}
 		else
 		{
@@ -814,14 +814,14 @@ static void Msg76_COMMAND_LONG(uint8_t Port_index, const mavlink_message_t *msg)
 static void Msg84_SET_POSITION_TARGET_LOCAL_NED(uint8_t Port_index, const mavlink_message_t *msg)
 {
 	sprintf(mystr, "msg84_entered\r\n\r\n");
-	Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+	//Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 	const mavlink_set_position_target_local_ned_t *msg_rd = (mavlink_set_position_target_local_ned_t *)msg->payload64;
 	if (Get_Guided_Mode_Enabled())
 	{
 		Position_Control_Enable();
 		Set_POS_Control_Enabled(true); //打开自动开启位置模式
 		sprintf(mystr, "coordinate_frame = %d\r\n\r\n", msg_rd->coordinate_frame);
-		Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+		//Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 		switch (msg_rd->coordinate_frame)
 		{
 		case MAV_FRAME_LOCAL_NED:
@@ -833,7 +833,7 @@ static void Msg84_SET_POSITION_TARGET_LOCAL_NED(uint8_t Port_index, const mavlin
 			float yaw = msg_rd->yaw;
 			float yaw_rate = msg_rd->yaw_rate;
 			sprintf(mystr, "frame_1_ok\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+			//Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 			if (!((msg_rd->type_mask & POSITION_TARGET_TYPEMASK_X_IGNORE) || (msg_rd->type_mask & POSITION_TARGET_TYPEMASK_Y_IGNORE)))
 			{
 				Position_Control_set_TargetPositionXY(east, north);
@@ -865,7 +865,7 @@ static void Msg84_SET_POSITION_TARGET_LOCAL_NED(uint8_t Port_index, const mavlin
 			float yaw = msg_rd->yaw;
 			float yaw_rate = msg_rd->yaw_rate;
 			sprintf(mystr, "frame_4_ok\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+			//Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 			if (!((msg_rd->type_mask & POSITION_TARGET_TYPEMASK_X_IGNORE) || (msg_rd->type_mask & POSITION_TARGET_TYPEMASK_Y_IGNORE)))
 			{
 				Position_Control_set_TargetPositionXY(east, north);
@@ -899,7 +899,7 @@ static void Msg84_SET_POSITION_TARGET_LOCAL_NED(uint8_t Port_index, const mavlin
 			float yaw = msg_rd->yaw;
 			float yaw_rate = msg_rd->yaw_rate;
 			sprintf(mystr, "frame_12_ok\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+			//Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 			if ((msg_rd->type_mask & POSITION_TARGET_TYPEMASK_X_IGNORE) || (msg_rd->type_mask & POSITION_TARGET_TYPEMASK_Y_IGNORE))
 			{
 				if (!((msg_rd->type_mask & POSITION_TARGET_TYPEMASK_VX_IGNORE) || (msg_rd->type_mask & POSITION_TARGET_TYPEMASK_VY_IGNORE)))
@@ -941,7 +941,7 @@ static void Msg84_SET_POSITION_TARGET_LOCAL_NED(uint8_t Port_index, const mavlin
 			float yaw = msg_rd->yaw;
 			float yaw_rate = msg_rd->yaw_rate;
 			sprintf(mystr, "frame_7_ok\r\n\r\n");
-			Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
+			//Write_Uart3((uint8_t *)mystr, strlen(mystr), 1, 1);
 			if (!((msg_rd->type_mask & POSITION_TARGET_TYPEMASK_X_IGNORE) || (msg_rd->type_mask & POSITION_TARGET_TYPEMASK_Y_IGNORE)))
 			{
 				Position_Control_set_TargetPositionXYRelative(east, north);

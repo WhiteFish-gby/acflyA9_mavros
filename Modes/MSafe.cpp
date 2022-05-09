@@ -174,7 +174,7 @@ static void MSafe_Server(void* pvParameters)
 		
 		
 		sprintf(tmpstr, "Xtime=%lf,Ytime=%lf\r\n\r\n",lastXYCtrlTime.get_pass_time(),lastZCtrlTime.get_pass_time());
-		Write_Uart3((uint8_t *)tmpstr, strlen(tmpstr), 1, 1);
+		//Write_Uart3((uint8_t *)tmpstr, strlen(tmpstr), 1, 1);
 
 		if( lowPowerState>0 || lastXYCtrlTime.get_pass_time()>1 || lastZCtrlTime.get_pass_time()>1 )
 		{	//低电量或控制超时
